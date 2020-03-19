@@ -1,0 +1,27 @@
+pipeline {
+    agent any
+
+    stages {
+        stage('Build') {
+            steps {
+		 withMaven(maven : 'mapache-maven-3.6.3') {
+                    sh 'mvn compile'
+                echo 'Building.. This is the build phase'
+            }
+        }
+        stage('Test') {
+            steps {
+ 			withMaven(maven : 'apache-maven-3.6.3') {
+                    sh 'mvn test'
+                echo 'Testing.. This is the testing phase'
+            }
+        }
+        stage('Deploy') {
+            steps {
+ 			withMaven(maven : 'apache-maven-3.6.3') {
+                    sh 'mvn deploy'
+                echo 'Deploying....  This is the deployment phase'
+            }
+        }
+    }
+}
