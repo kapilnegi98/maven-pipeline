@@ -7,13 +7,13 @@ pipeline {
 		 withMaven(maven : 'mapache-maven-3.6.3') {
                     sh 'mvn compile'
                 
-            }
+            }}
         }
         stage('Test') {
             steps {
  			withMaven(maven : 'apache-maven-3.6.3') {
                     sh 'mvn test'
-               
+               }
             }
         }
         stage('Deploy') {
@@ -24,4 +24,5 @@ pipeline {
             }
         }
     }
+}
 }
