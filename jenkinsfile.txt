@@ -1,41 +1,28 @@
 pipeline {
+  environment {
+    registry = "https://hub.docker.com/repository/docker/kapilnegi/java-maven"
+    registryCredential = 'dockerhub'
+    dockerImage = ''
+  }
+
 
     agent any
     tools {
         maven 'apache-maven-3.6.3' 
     }
     stages {
-        stage('Compile stage') {
-            steps {
-                bat "mvn compile" 
+      
+    stage('Push image') {
+       steps{
+        script {
+          docker.withRegistry( '', registryCredential ) {
+            dockerImage.push()
+          }
         }
-    }
+      }
 
-         stage('testing stage') {
-             steps {
-                bat "mvn test"
-        }
+     
     }
-
-          stage('deployment stage') {
-              steps {
-                bat "mvn deploy"
-        }
-    }
-    
-    stage('Sonarqube') {
-    environment {
-        scannerHome = tool 'SonarQubeScanner'
-    }
-    steps {
-        withSonarQubeEnv('sonarqube') {
-            bat "${scannerHome}/bin/sonar-scanner"
-        }
-        timeout(time: 10, unit: 'MINUTES') {
-            waitForQualityGate abortPipeline: true
-        }
-    }
-}
 
   }
 
