@@ -1,2 +1,2 @@
-FROM openjdk:11-jdk-slim
+FROM openjdk:7
 EXPOSE 8000
