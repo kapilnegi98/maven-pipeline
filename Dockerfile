@@ -1,2 +1,2 @@
-FROM openjdk:15-windowsservercore-ltsc2016
+FROM openjdk:7
 EXPOSE 8000
